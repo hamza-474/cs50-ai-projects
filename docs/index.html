@@ -448,19 +448,17 @@ grid = []
 for i in range(cw.height):
     row = []
     for j in range(cw.width):
-        if not cw.structure[i][j]: row.append(None)
-        else:
-            letter = None
-            for var in cw.variables:
-                if var.i == i and var.j == j and var.direction == "across" and assignment and var in assignment:
-                    letter = assignment[var][var.cells.index((i, j))]
-                if var.i == i and var.j == j and var.direction == "down" and assignment and var in assignment:
-                    letter = assignment[var][var.cells.index((i, j))]
-            row.append(letter)
+        row.append(None if not cw.structure[i][j] else "")
     grid.append(row)
-json.dumps(grid)
+if assignment:
+    for var, word in assignment.items():
+        for k in range(len(word)):
+            ci, cj = var.cells[k]
+            grid[ci][cj] = word[k]
+json.dumps({"grid": grid, "solved": bool(assignment)})
 `);
-      const grid = JSON.parse(out);
+      const parsed = JSON.parse(out);
+      const grid = parsed.grid;
       holder.innerHTML = "";
       const t = document.createElement("table"); t.className = "xw";
       grid.forEach(row => {
@@ -474,7 +472,7 @@ json.dumps(grid)
         t.appendChild(tr);
       });
       holder.appendChild(t);
-      msg.textContent = "✅ Solved! Every across and down slot is filled with a real word, and all crossing letters match.";
+      msg.textContent = parsed.solved ? "✅ Solved! Every across and down slot is filled with a real word, and all crossing letters match." : "The AI could not fill this grid completely with the given word list.";
       statusEl.textContent = "Done ✔";
     } catch (err) {
       msg.textContent = "Something went wrong: " + err.message;
