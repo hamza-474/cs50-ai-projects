@@ -1,0 +1,33 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794834935.399909  106742 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794834943.552977  106742 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+E0000 00:00:1794834949.748814  106742 cuda_platform.cc:57] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+=== Source Location Trace: === 
+external/xla/xla/stream_executor/cuda/cuda_status.cc:50
+
+All PyTorch model weights were used when initializing TFBertForMaskedLM.
+
+All the weights of TFBertForMaskedLM were initialized from the PyTorch model.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use TFBertForMaskedLM for predictions without further training.
+L4H10 prep->masked noun The dog sat on the [MASK]. ['[CLS]', 'the', 'dog', 'sat', 'on', 'the', '[MASK]', '.', '[SEP]']
+  L4H10 on->the = 0.224  ->next the = 0.224  row=[('[CLS]', 0.006), ('the', 0.0), ('dog', 0.004), ('sat', 0.0), ('on', 0.0), ('the', 0.224), ('[MASK]', 0.739), ('.', 0.002), ('[SEP]', 0.024)]
+L4H10 prep->masked noun She put the key in the [MASK]. ['[CLS]', 'she', 'put', 'the', 'key', 'in', 'the', '[MASK]', '.', '[SEP]']
+  L4H10 in->the = 0.174  ->next the = 0.174  row=[('[CLS]', 0.005), ('she', 0.0), ('put', 0.0), ('the', 0.0), ('key', 0.007), ('in', 0.0), ('the', 0.174), ('[MASK]', 0.797), ('.', 0.003), ('[SEP]', 0.014)]
+L4H10 prep->masked noun The book on the [MASK] is red. ['[CLS]', 'the', 'book', 'on', 'the', '[MASK]', 'is', 'red', '.', '[SEP]']
+  L4H10 on->the = 0.266  ->next the = 0.266  row=[('[CLS]', 0.005), ('the', 0.0), ('book', 0.01), ('on', 0.002), ('the', 0.266), ('[MASK]', 0.684), ('is', 0.005), ('red', 0.009), ('.', 0.0), ('[SEP]', 0.018)]
+L4H10 prep->masked noun Holmes sat in the red [MASK]. ['[CLS]', 'holmes', 'sat', 'in', 'the', 'red', '[MASK]', '.', '[SEP]']
+  L4H10 in->[MASK] = 0.194  ->next the = 0.206  row=[('[CLS]', 0.016), ('holmes', 0.0), ('sat', 0.001), ('in', 0.001), ('the', 0.206), ('red', 0.528), ('[MASK]', 0.194), ('.', 0.003), ('[SEP]', 0.051)]
+L4H10 det->noun (masked verb) The [MASK] sat on the mat. ['[CLS]', 'the', '[MASK]', 'sat', 'on', 'the', 'mat', '.', '[SEP]']
+  L4H10 the->[MASK] = 0.914  ->next [MASK] = 0.914  row=[('[CLS]', 0.035), ('the', 0.005), ('[MASK]', 0.914), ('sat', 0.008), ('on', 0.001), ('the', 0.0), ('mat', 0.002), ('.', 0.0), ('[SEP]', 0.035)]
+L4H10 det->noun (masked verb) She put the [MASK] in the box. ['[CLS]', 'she', 'put', 'the', '[MASK]', 'in', 'the', 'box', '.', '[SEP]']
+  L4H10 the->[MASK] = 0.887  ->next [MASK] = 0.887  row=[('[CLS]', 0.04), ('she', 0.001), ('put', 0.001), ('the', 0.011), ('[MASK]', 0.887), ('in', 0.01), ('the', 0.001), ('box', 0.005), ('.', 0.0), ('[SEP]', 0.043)]
+L9H11 reflex->ant Holmes [MASK] to himself. ['[CLS]', 'holmes', '[MASK]', 'to', 'himself', '.', '[SEP]']
+  L9H11 himself->holmes = 0.846  ->next . = 0.010  row=[('[CLS]', 0.01), ('holmes', 0.846), ('[MASK]', 0.057), ('to', 0.029), ('himself', 0.026), ('.', 0.01), ('[SEP]', 0.022)]
+L9H11 reflex->ant John [MASK] himself. ['[CLS]', 'john', '[MASK]', 'himself', '.', '[SEP]']
+  L9H11 himself->john = 0.502  ->next . = 0.033  row=[('[CLS]', 0.016), ('john', 0.502), ('[MASK]', 0.248), ('himself', 0.09), ('.', 0.033), ('[SEP]', 0.111)]
+L9H11 reflex->ant Mary [MASK] herself. ['[CLS]', 'mary', '[MASK]', 'herself', '.', '[SEP]']
+  L9H11 herself->mary = 0.506  ->next . = 0.025  row=[('[CLS]', 0.021), ('mary', 0.506), ('[MASK]', 0.219), ('herself', 0.078), ('.', 0.025), ('[SEP]', 0.151)]
+L9H11 reflex->ant The dog [MASK] itself. ['[CLS]', 'the', 'dog', '[MASK]', 'itself', '.', '[SEP]']
+  L9H11 itself->dog = 0.722  ->next . = 0.014  row=[('[CLS]', 0.011), ('the', 0.119), ('dog', 0.722), ('[MASK]', 0.059), ('itself', 0.048), ('.', 0.014), ('[SEP]', 0.026)]
+DONE3

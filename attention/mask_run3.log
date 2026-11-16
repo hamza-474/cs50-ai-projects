@@ -1,0 +1,15 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794834611.888581  104754 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794834618.950253  104754 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+Text: E0000 00:00:1794834626.323002  104754 cuda_platform.cc:57] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+=== Source Location Trace: === 
+external/xla/xla/stream_executor/cuda/cuda_status.cc:50
+
+All PyTorch model weights were used when initializing TFBertForMaskedLM.
+
+All the weights of TFBertForMaskedLM were initialized from the PyTorch model.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use TFBertForMaskedLM for predictions without further training.
+Then I picked up a book from the table.
+Then I picked up a bottle from the table.
+Then I picked up a plate from the table.

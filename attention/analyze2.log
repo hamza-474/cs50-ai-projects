@@ -1,0 +1,73 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794834833.042444  106072 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794834843.384542  106072 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+E0000 00:00:1794834849.059687  106072 cuda_platform.cc:57] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+=== Source Location Trace: ===
+external/xla/xla/stream_executor/cuda/cuda_status.cc:50
+
+All PyTorch model weights were used when initializing TFBertForMaskedLM.
+
+All the weights of TFBertForMaskedLM were initialized from the PyTorch model.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use TFBertForMaskedLM for predictions without further training.
+REFLEX Holmes chuckled to himself. ['[CLS]', 'holmes', 'chuckled', 'to', 'himself', '.', '[SEP]']
+  L9H11 himself->holmes = 0.939  himself->first=0.002 himself->self=0.013
+  L10H11 himself->holmes = 0.766  himself->first=0.007 himself->self=0.031
+  L10H6 himself->holmes = 0.728  himself->first=0.006 himself->self=0.040
+  L8H5 himself->holmes = 0.666  himself->first=0.036 himself->self=0.010
+REFLEX John hurt himself. ['[CLS]', 'john', 'hurt', 'himself', '.', '[SEP]']
+  L9H11 himself->john = 0.852  himself->first=0.010 himself->self=0.020
+  L10H11 himself->john = 0.339  himself->first=0.118 himself->self=0.067
+  L10H6 himself->john = 0.340  himself->first=0.006 himself->self=0.020
+  L8H5 himself->john = 0.235  himself->first=0.037 himself->self=0.031
+REFLEX Mary blamed herself. ['[CLS]', 'mary', 'blamed', 'herself', '.', '[SEP]']
+  L9H11 herself->mary = 0.812  herself->first=0.009 herself->self=0.068
+  L10H11 herself->mary = 0.611  herself->first=0.084 herself->self=0.039
+  L10H6 herself->mary = 0.528  herself->first=0.008 herself->self=0.034
+  L8H5 herself->mary = 0.107  herself->first=0.108 herself->self=0.009
+REFLEX The dog washed itself. ['[CLS]', 'the', 'dog', 'washed', 'itself', '.', '[SEP]']
+  L9H11 itself->dog = 0.883  itself->first=0.004 itself->self=0.018
+  L10H11 itself->dog = 0.067  itself->first=0.125 itself->self=0.149
+  L10H6 itself->dog = 0.156  itself->first=0.009 itself->self=0.032
+  L8H5 itself->dog = 0.074  itself->first=0.039 itself->self=0.016
+REFLEX They taught themselves a lesson. ['[CLS]', 'they', 'taught', 'themselves', 'a', 'lesson', '.', '[SEP]']
+  L9H11 themselves->they = 0.483  themselves->first=0.009 themselves->self=0.302
+  L10H11 themselves->they = 0.095  themselves->first=0.106 themselves->self=0.121
+  L10H6 themselves->they = 0.057  themselves->first=0.019 themselves->self=0.032
+  L8H5 themselves->they = 0.132  themselves->first=0.022 themselves->self=0.083
+REFLEX She looked at herself in the mirror. ['[CLS]', 'she', 'looked', 'at', 'herself', 'in', 'the', 'mirror', '.', '[SEP]']
+  L9H11 herself->she = 0.278  herself->first=0.028 herself->self=0.339
+  L10H11 herself->she = 0.112  herself->first=0.161 herself->self=0.210
+  L10H6 herself->she = 0.094  herself->first=0.040 herself->self=0.038
+  L8H5 herself->she = 0.022  herself->first=0.045 herself->self=0.018
+PREP The dog sat on the mat. ['[CLS]', 'the', 'dog', 'sat', 'on', 'the', 'mat', '.', '[SEP]']
+  L4H10 on->noun mat = 0.757  ->next the = 0.197  ->verb/subj = 0.000  max=mat 0.757
+  L8H11 on->noun mat = 0.660  ->next the = 0.095  ->verb/subj = 0.004  max=mat 0.660
+  L6H10 on->noun mat = 0.377  ->next the = 0.440  ->verb/subj = 0.003  max=the 0.440
+  L4H10 full row on [('[CLS]', 0.007), ('the', 0.0), ('dog', 0.012), ('sat', 0.0), ('on', 0.0), ('the', 0.197), ('mat', 0.757), ('.', 0.004), ('[SEP]', 0.022)]
+PREP She put the key in the box. ['[CLS]', 'she', 'put', 'the', 'key', 'in', 'the', 'box', '.', '[SEP]']
+  L4H10 in->noun box = 0.935  ->next the = 0.041  ->verb/subj = 0.000  max=box 0.935
+  L8H11 in->noun box = 0.714  ->next the = 0.059  ->verb/subj = 0.003  max=box 0.714
+  L6H10 in->noun box = 0.509  ->next the = 0.407  ->verb/subj = 0.001  max=box 0.509
+  L4H10 full row in [('[CLS]', 0.004), ('she', 0.0), ('put', 0.0), ('the', 0.0), ('key', 0.003), ('in', 0.0), ('the', 0.041), ('box', 0.935), ('.', 0.003), ('[SEP]', 0.013)]
+PREP Holmes sat in the red armchair. ['[CLS]', 'holmes', 'sat', 'in', 'the', 'red', 'armchair', '.', '[SEP]']
+  L4H10 in->noun armchair = 0.582  ->next the = 0.171  ->verb/subj = 0.000  max=armchair 0.582
+  L8H11 in->noun armchair = 0.590  ->next the = 0.087  ->verb/subj = 0.002  max=armchair 0.590
+  L6H10 in->noun armchair = 0.022  ->next the = 0.278  ->verb/subj = 0.003  max=red 0.593
+  L4H10 full row in [('[CLS]', 0.023), ('holmes', 0.0), ('sat', 0.001), ('in', 0.001), ('the', 0.171), ('red', 0.152), ('armchair', 0.582), ('.', 0.005), ('[SEP]', 0.066)]
+PREP The book on the table is red. ['[CLS]', 'the', 'book', 'on', 'the', 'table', 'is', 'red', '.', '[SEP]']
+  L4H10 on->noun table = 0.874  ->next the = 0.091  ->verb/subj = 0.000  max=table 0.874
+  L8H11 on->noun table = 0.779  ->next the = 0.018  ->verb/subj = 0.003  max=table 0.779
+  L6H10 on->noun table = 0.671  ->next the = 0.254  ->verb/subj = 0.002  max=table 0.671
+  L4H10 full row on [('[CLS]', 0.004), ('the', 0.0), ('book', 0.005), ('on', 0.001), ('the', 0.091), ('table', 0.874), ('is', 0.005), ('red', 0.003), ('.', 0.0), ('[SEP]', 0.016)]
+PREP I had a little moist red paint in the palm of my hand. ['[CLS]', 'i', 'had', 'a', 'little', 'moist', 'red', 'paint', 'in', 'the', 'palm', 'of', 'my', 'hand', '.', '[SEP]']
+  L4H10 in->noun palm = 0.965  ->next the = 0.018  ->verb/subj = 0.000  max=palm 0.965
+  L8H11 in->noun palm = 0.214  ->next the = 0.011  ->verb/subj = 0.017  max=my 0.497
+  L6H10 in->noun palm = 0.703  ->next the = 0.131  ->verb/subj = 0.001  max=palm 0.703
+  L4H10 full row in [('[CLS]', 0.001), ('i', 0.0), ('had', 0.0), ('a', 0.0), ('little', 0.0), ('moist', 0.0), ('red', 0.0), ('paint', 0.003), ('in', 0.0), ('the', 0.018), ('palm', 0.965), ('of', 0.002), ('my', 0.001), ('hand', 0.007), ('.', 0.0), ('[SEP]', 0.003)]
+PREP I had a little moist red paint in the palm of my hand. ['[CLS]', 'i', 'had', 'a', 'little', 'moist', 'red', 'paint', 'in', 'the', 'palm', 'of', 'my', 'hand', '.', '[SEP]']
+  L4H10 of->noun hand = 0.807  ->next my = 0.130  ->verb/subj = 0.000  max=hand 0.807
+  L8H11 of->noun hand = 0.954  ->next my = 0.003  ->verb/subj = 0.000  max=hand 0.954
+  L6H10 of->noun hand = 0.715  ->next my = 0.251  ->verb/subj = 0.000  max=hand 0.715
+  L4H10 full row of [('[CLS]', 0.013), ('i', 0.0), ('had', 0.0), ('a', 0.0), ('little', 0.0), ('moist', 0.0), ('red', 0.0), ('paint', 0.001), ('in', 0.0), ('the', 0.001), ('palm', 0.024), ('of', 0.003), ('my', 0.13), ('hand', 0.807), ('.', 0.002), ('[SEP]', 0.019)]
+DONE2

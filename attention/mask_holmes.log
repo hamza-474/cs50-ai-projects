@@ -1,0 +1,14 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794835773.103852    8412 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+I0000 00:00:1794835793.083580    8412 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794835850.019078    8412 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+Text: E0000 00:00:1794835885.769855    8412 cuda_platform.cc:57] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+=== Source Location Trace: ===
+external/xla/xla/stream_executor/cuda/cuda_status.cc:50
+
+W0000 00:00:1794835886.678788    8412 cpu_allocator_impl.cc:174] Allocation of 93763584 exceeds 10% of free system memory.
+W0000 00:00:1794835887.280641    8412 cpu_allocator_impl.cc:174] Allocation of 93763584 exceeds 10% of free system memory.
+W0000 00:00:1794835887.381981    8412 cpu_allocator_impl.cc:174] Allocation of 93763584 exceeds 10% of free system memory.
+Terminated                 echo 'Holmes [MASK] to himself.' | python3 mask.py

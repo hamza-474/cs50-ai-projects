@@ -1,0 +1,16 @@
+Connecting......
+Authenticating....
+Verifying.....
+Preparing.....
+[32mFiles that will be submitted:[0m
+[32m./traffic.py[0m
+[32m./README.md[0m
+[33mFiles that won't be submitted:[0m
+[33m./check50.log[0m
+[33m./train.log[0m
+[33m./submit50.log[0m
+[33m./requirements.txt[0m
+[33m./__pycache__/traffic.cpython-314.pyc[0m
+[33m./model.h5[0m
+Keeping in mind the course's policy on academic honesty, including its restrictions on AI use, are you sure you want to submit these files (yes/no)? Uploading.......
+Go to https://submit.cs50.io/users/hamza-474/ai50/projects/2024/x/traffic to see your results.

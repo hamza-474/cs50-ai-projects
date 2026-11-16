@@ -1,0 +1,16 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794834386.914365  103233 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+I0000 00:00:1794834387.878151  103233 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794834393.496846  103233 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+Text: E0000 00:00:1794834401.631619  103233 cuda_platform.cc:57] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+=== Source Location Trace: ===
+external/xla/xla/stream_executor/cuda/cuda_status.cc:50
+
+W0000 00:00:1794834414.666018  103233 cpu_allocator_impl.cc:174] Allocation of 93763584 exceeds 10% of free system memory.
+W0000 00:00:1794834415.151399  103233 cpu_allocator_impl.cc:174] Allocation of 93763584 exceeds 10% of free system memory.
+W0000 00:00:1794834415.284658  103233 cpu_allocator_impl.cc:174] Allocation of 93763584 exceeds 10% of free system memory.
+W0000 00:00:1794834418.648438  103233 cpu_allocator_impl.cc:174] Allocation of 93763584 exceeds 10% of free system memory.
+/usr/local/lib/python3.14/multiprocessing/resource_tracker.py:475: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown: {'/loky-103233-nd9o9gvk'}
+  warnings.warn(

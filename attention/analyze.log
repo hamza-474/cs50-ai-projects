@@ -1,0 +1,29 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794834725.997643  105583 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794834732.889653  105583 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+E0000 00:00:1794834738.317431  105583 cuda_platform.cc:57] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+=== Source Location Trace: ===
+external/xla/xla/stream_executor/cuda/cuda_status.cc:50
+
+All PyTorch model weights were used when initializing TFBertForMaskedLM.
+
+All the weights of TFBertForMaskedLM were initialized from the PyTorch model.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use TFBertForMaskedLM for predictions without further training.
+SENT The dog sat on the mat. ['[CLS]', 'the', 'dog', 'sat', 'on', 'the', 'mat', '.', '[SEP]']
+SENT The cat chased the small mouse. ['[CLS]', 'the', 'cat', 'chased', 'the', 'small', 'mouse', '.', '[SEP]']
+SENT Holmes lit his pipe. ['[CLS]', 'holmes', 'lit', 'his', 'pipe', '.', '[SEP]']
+SENT My companion smiled an enigmatical smile. ['[CLS]', 'my', 'companion', 'smiled', 'an', 'enigma', '##tical', 'smile', '.', '[SEP]']
+SENT The man gave Mary a red book. ['[CLS]', 'the', 'man', 'gave', 'mary', 'a', 'red', 'book', '.', '[SEP]']
+SENT Holmes chuckled to himself. ['[CLS]', 'holmes', 'chuckled', 'to', 'himself', '.', '[SEP]']
+SENT The book on the table is red. ['[CLS]', 'the', 'book', 'on', 'the', 'table', 'is', 'red', '.', '[SEP]']
+SENT I had a little moist red paint in the palm of my hand. ['[CLS]', 'i', 'had', 'a', 'little', 'moist', 'red', 'paint', 'in', 'the', 'palm', 'of', 'my', 'hand', '.', '[SEP]']
+REL det_noun top5: [(0.84, 4, 10, 8), (0.801, 8, 11, 8), (0.75, 3, 1, 8), (0.75, 3, 10, 8), (0.645, 6, 10, 8)]
+REL adj_noun top5: [(0.667, 3, 1, 6), (0.667, 3, 10, 6), (0.627, 1, 11, 6), (0.525, 6, 10, 6), (0.441, 4, 10, 6)]
+REL prep_noun top5: [(0.872, 4, 10, 5), (0.677, 6, 10, 5), (0.672, 5, 6, 5), (0.583, 8, 11, 5), (0.547, 1, 11, 5)]
+REL verb_obj top5: [(0.421, 4, 11, 4), (0.278, 1, 6, 4), (0.276, 5, 6, 4), (0.239, 4, 4, 4), (0.213, 1, 12, 4)]
+REL subj_verb top5: [(0.75, 3, 1, 4), (0.75, 3, 10, 4), (0.332, 1, 11, 4), (0.332, 6, 10, 4), (0.257, 2, 2, 4)]
+REL poss_noun top5: [(1.0, 3, 1, 3), (1.0, 3, 10, 3), (0.975, 6, 10, 3), (0.955, 4, 10, 3), (0.821, 1, 11, 3)]
+REL reflex_ant top5: [(0.939, 9, 11, 1), (0.766, 10, 11, 1), (0.728, 10, 6, 1), (0.666, 8, 5, 1), (0.54, 10, 2, 1)]
+NEXT_TOKEN top5: [(0.878, 3, 10), (0.876, 3, 1), (0.562, 1, 11), (0.512, 6, 10), (0.47, 2, 2)]
+DONE
