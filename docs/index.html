@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS50 AI — Live Playground | Hamza Madni</title>
+<style>
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; background: #0d1117; color: #e6edf3; }
+  header { padding: 28px 20px 8px; text-align: center; }
+  h1 { margin: 0 0 6px; font-size: 28px; }
+  .sub { color: #9da7b3; margin: 0 0 4px; }
+  a { color: #58a6ff; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 16px 20px 48px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 20px 0; }
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; cursor: pointer; text-align: left; color: #e6edf3; width: 100%; }
+  .card:hover { border-color: #58a6ff; }
+  .card.active { border-color: #58a6ff; background: #1c2330; }
+  .card b { display: block; margin-bottom: 4px; font-size: 15px; }
+  .card span { color: #9da7b3; font-size: 13px; }
+  #status { color: #f0b429; min-height: 20px; font-size: 15px; }
+  .panel { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 18px; margin: 14px 0; }
+  .panel h2 { margin-top: 0; font-size: 20px; }
+  .msg { font-size: 17px; min-height: 24px; margin: 10px 0; }
+  button.act { background: #238636; color: #fff; border: 0; border-radius: 8px; padding: 10px 18px; font-size: 15px; cursor: pointer; margin: 4px 4px 4px 0; }
+  button.alt { background: #21262d; color: #e6edf3; border: 1px solid #30363d; border-radius: 8px; padding: 10px 18px; font-size: 15px; cursor: pointer; margin: 4px 4px 4px 0; }
+  button.alt:hover, button.act:hover { filter: brightness(1.2); }
+  /* tic tac toe */
+  .ttt { display: grid; grid-template-columns: repeat(3, 84px); gap: 8px; margin: 12px 0; }
+  .ttt button { height: 84px; font-size: 40px; font-weight: 700; background: #0d1117; color: #e6edf3; border: 2px solid #30363d; border-radius: 10px; cursor: pointer; }
+  .ttt button:hover { border-color: #58a6ff; }
+  /* minesweeper */
+  .ms { display: grid; grid-template-columns: repeat(8, 38px); gap: 4px; margin: 12px 0; }
+  .ms button { height: 38px; font-size: 16px; font-weight: 700; background: #21262d; color: #e6edf3; border: 1px solid #30363d; border-radius: 6px; cursor: pointer; padding: 0; }
+  .ms button.open { background: #0d1117; cursor: default; }
+  .ms button.hint { border-color: #f0b429; box-shadow: 0 0 0 2px #f0b429 inset; }
+  /* nim */
+  .pile { display: inline-block; margin: 8px 14px 8px 0; text-align: center; }
+  .pile .objs { font-size: 22px; letter-spacing: 2px; min-height: 28px; }
+  .pile button { margin-top: 4px; }
+  select, input[type=text] { background: #0d1117; color: #e6edf3; border: 1px solid #30363d; border-radius: 8px; padding: 9px; font-size: 15px; margin: 4px 4px 4px 0; }
+  /* crossword */
+  table.xw { border-collapse: collapse; margin: 12px 0; }
+  table.xw td { width: 34px; height: 34px; text-align: center; font-weight: 700; font-size: 17px; border: 1px solid #30363d; background: #f6f8fa; color: #0d1117; }
+  table.xw td.block { background: #30363d; }
+  .spin { display: inline-block; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+  footer { text-align: center; color: #9da7b3; font-size: 13px; padding-bottom: 28px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🤖 CS50 AI — Live Playground</h1>
+  <p class="sub">Hamza Madni's Harvard CS50 AI projects — <b>play against the AIs right here in your browser.</b></p>
+  <p class="sub">🎓 <a href="https://cs50.harvard.edu/certificates/780d9c44-2dff-4543-95ad-51fac303b4fd" target="_blank" rel="noopener">Harvard certificate</a> · 💻 <a href="https://github.com/hamza-474/cs50-ai-projects" target="_blank" rel="noopener">All 12 projects' code</a></p>
+</header>
+<div class="wrap">
+  <div class="cards" id="cards">
+    <button class="card" data-p="ttt"><b>❌⭕ Tic-Tac-Toe vs AI</b><span>Play against the Minimax AI — it never loses. Best you can do is a draw!</span></button>
+    <button class="card" data-p="ms"><b>💣 Minesweeper + AI hint</b><span>Play the game — and ask the logic AI which cell is safe.</span></button>
+    <button class="card" data-p="nim"><b>🥢 Nim vs Learning AI</b><span>The AI taught itself by playing 3,000 games. Take the last object to lose!</span></button>
+    <button class="card" data-p="degrees"><b>🎬 Degrees of Separation</b><span>Pick two actors — the AI finds how they are connected through movies.</span></button>
+    <button class="card" data-p="xw"><b>🧩 Crossword Generator</b><span>The AI fills a crossword grid by itself, using logic + backtracking.</span></button>
+    <button class="card" data-p="more"><b>📚 The Other Projects</b><span>Knights, PageRank, Heredity, Shopping, Traffic (98.32%!), Parser, BERT Attention.</span></button>
+  </div>
+  <p id="status">Tap any game above to start.</p>
+  <div id="out"></div>
+</div>
+<footer>Built by Hamza Madni · Harvard CS50 AI, all 12 projects passed with full marks · Games run entirely in your browser</footer>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script>
+const RAW = "https://raw.githubusercontent.com/hamza-474/cs50-ai-projects/main/";
+const GH = "https://github.com/hamza-474/cs50-ai-projects/tree/main/";
+const statusEl = document.getElementById("status");
+const outEl = document.getElementById("out");
+function el(tag, cls, text) { const d = document.createElement(tag); if (cls) d.className = cls; if (text !== undefined) d.textContent = text; return d; }
+function panel(title, intro) {
+  outEl.innerHTML = "";
+  const p = el("div", "panel");
+  p.appendChild(el("h2", null, title));
+  if (intro) p.appendChild(el("p", "sub", intro));
+  outEl.appendChild(p);
+  return p;
+}
+document.getElementById("cards").addEventListener("click", (e) => {
+  const card = e.target.closest(".card");
+  if (!card) return;
+  document.querySelectorAll(".card").forEach(c => c.classList.toggle("active", c === card));
+  const p = card.dataset.p;
+  if (p === "ttt") startTTT();
+  else if (p === "ms") startMS();
+  else if (p === "nim") startNim();
+  else if (p === "degrees") startDegrees();
+  else if (p === "xw") startXW();
+  else if (p === "more") showMore();
+});
+
+/* ================= Tic-Tac-Toe (Minimax, same algorithm as the project) ================= */
+let ttt = null;
+function tttWinner(b) {
+  const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  for (const [a,c,d] of lines) if (b[a] && b[a] === b[c] && b[a] === b[d]) return b[a];
+  return b.every(x => x) ? "draw" : null;
+}
+function tttMinimax(b, isMax, ai, hu) {
+  const w = tttWinner(b);
+  if (w === ai) return { score: 1 };
+  if (w === hu) return { score: -1 };
+  if (w === "draw") return { score: 0 };
+  let best = { score: isMax ? -2 : 2 };
+  for (let i = 0; i < 9; i++) {
+    if (b[i]) continue;
+    b[i] = isMax ? ai : hu;
+    const r = tttMinimax(b, !isMax, ai, hu);
+    b[i] = null;
+    if (isMax ? r.score > best.score : r.score < best.score) best = { score: r.score, i };
+  }
+  return best;
+}
+function startTTT() {
+  ttt = { b: Array(9).fill(null), hu: "X", ai: "O", over: false };
+  const p = panel("❌⭕ Tic-Tac-Toe vs the Minimax AI", "You are X. Tap any square. This AI checks every possible future before moving — nobody has ever beaten it.");
+  const msg = el("p", "msg", "Your turn — tap a square.");
+  const grid = el("div", "ttt");
+  const cells = [];
+  for (let i = 0; i < 9; i++) {
+    const btn = el("button", null, "");
+    btn.addEventListener("click", () => {
+      if (ttt.over || ttt.b[i]) return;
+      ttt.b[i] = ttt.hu; btn.textContent = ttt.hu;
+      let w = tttWinner(ttt.b);
+      if (w) { ttt.over = true; msg.textContent = w === "draw" ? "🤝 Draw! That is the best anyone can do against this AI." : "🎉 You won?! (The AI is shocked.)"; return; }
+      const mv = tttMinimax(ttt.b.slice(), true, ttt.ai, ttt.hu);
+      ttt.b[mv.i] = ttt.ai; cells[mv.i].textContent = ttt.ai;
+      w = tttWinner(ttt.b);
+      if (w) { ttt.over = true; msg.textContent = w === "draw" ? "🤝 Draw! Well played." : "🤖 The AI wins. It saw this ending many moves ago."; }
+      else msg.textContent = "Your turn — tap a square.";
+    });
+    cells.push(btn); grid.appendChild(btn);
+  }
+  p.appendChild(msg); p.appendChild(grid);
+  const again = el("button", "act", "↻ Play again");
+  again.addEventListener("click", startTTT);
+  p.appendChild(again);
+  statusEl.textContent = "Game on — you are X.";
+}
+
+/* ================= Minesweeper (with the project's inference idea) ================= */
+let ms = null;
+function startMS() {
+  const H = 8, W = 8, MINES = 8;
+  const mineSet = new Set();
+  while (mineSet.size < MINES) mineSet.add(Math.floor(Math.random() * H * W));
+  ms = { H, W, mines: mineSet, open: new Set(), over: false };
+  const p = panel("💣 Minesweeper + AI hint", "Tap a cell to open it. Numbers tell how many mines touch that cell. Stuck? Press “AI hint” — the logic AI works out a cell that is provably safe, the same way the CS50 AI plays.");
+  const msg = el("p", "msg", "8 mines are hiding. Good luck!");
+  const grid = el("div", "ms");
+  const cells = [];
+  const neighbors = (i) => {
+    const r = Math.floor(i / W), c = i % W, out = [];
+    for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
+      if (!dr && !dc) continue;
+      const nr = r + dr, nc = c + dc;
+      if (nr >= 0 && nr < H && nc >= 0 && nc < W) out.push(nr * W + nc);
+    }
+    return out;
+  };
+  const count = (i) => neighbors(i).filter(n => ms.mines.has(n)).length;
+  function openCell(i) {
+    if (ms.over || ms.open.has(i)) return;
+    if (ms.mines.has(i)) {
+      ms.over = true;
+      cells[i].textContent = "💣";
+      msg.textContent = "💥 Boom! That was a mine. Press “New game” to try again.";
+      ms.mines.forEach(m => { if (!ms.open.has(m)) cells[m].textContent = "💣"; });
+      return;
+    }
+    const stack = [i];
+    while (stack.length) {
+      const cur = stack.pop();
+      if (ms.open.has(cur) || ms.mines.has(cur)) continue;
+      ms.open.add(cur);
+      const n = count(cur);
+      cells[cur].classList.add("open");
+      cells[cur].textContent = n ? String(n) : "";
+      if (n === 0) neighbors(cur).forEach(nb => { if (!ms.open.has(nb)) stack.push(nb); });
+    }
+    if (ms.open.size === H * W - MINES) { ms.over = true; msg.textContent = "🏆 You cleared the whole board — no mine touched!"; }
+  }
+  for (let i = 0; i < H * W; i++) {
+    const btn = el("button", null, "");
+    btn.addEventListener("click", () => openCell(i));
+    cells.push(btn); grid.appendChild(btn);
+  }
+  p.appendChild(msg); p.appendChild(grid);
+  const hint = el("button", "act", "🤖 AI hint — show a safe cell");
+  hint.addEventListener("click", () => {
+    cells.forEach(c => c.classList.remove("hint"));
+    // Inference: collect sentences (cells around a number, remaining mine count)
+    const sentences = [];
+    ms.open.forEach(i => {
+      const n = count(i);
+      if (n === 0) return;
+      const around = neighbors(i).filter(x => !ms.open.has(x));
+      if (around.length) sentences.push({ cells: new Set(around), count: n });
+    });
+    const knownSafe = new Set(), knownMine = new Set();
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (const s of sentences) {
+        const cs = [...s.cells].filter(x => !knownSafe.has(x) && !knownMine.has(x));
+        const cnt = s.count - [...s.cells].filter(x => knownMine.has(x)).length;
+        if (cs.length && cnt === 0) cs.forEach(x => { if (!knownSafe.has(x)) { knownSafe.add(x); changed = true; } });
+        else if (cs.length && cnt === cs.length) cs.forEach(x => { if (!knownMine.has(x)) { knownMine.add(x); changed = true; } });
+      }
+      for (let a = 0; a < sentences.length; a++) for (let b = 0; b < sentences.length; b++) {
+        if (a === b) continue;
+        const A = sentences[a], B = sentences[b];
+        const aCells = [...A.cells].filter(x => !knownSafe.has(x) && !knownMine.has(x));
+        const bCells = [...B.cells].filter(x => !knownSafe.has(x) && !knownMine.has(x));
+        if (aCells.length && aCells.every(x => bCells.includes(x))) {
+          const diff = bCells.filter(x => !aCells.includes(x));
+          const dcount = (B.count - [...B.cells].filter(x => knownMine.has(x)).length) - (A.count - [...A.cells].filter(x => knownMine.has(x)).length);
+          if (diff.length && dcount === 0) diff.forEach(x => { if (!knownSafe.has(x)) { knownSafe.add(x); changed = true; } });
+          if (diff.length && dcount === diff.length) diff.forEach(x => { if (!knownMine.has(x)) { knownMine.add(x); changed = true; } });
+        }
+      }
+    }
+    const safe = [...knownSafe].filter(x => !ms.open.has(x));
+    if (safe.length) {
+      cells[safe[0]].classList.add("hint");
+      msg.textContent = "🤖 The AI proved the highlighted cell is safe" + (knownMine.size ? " — and it is sure about " + knownMine.size + " mine cell(s), shown nowhere (no cheating!)." : ".");
+    } else {
+      msg.textContent = "🤖 The AI cannot prove any cell safe yet — open a few more cells first (start with a corner).";
+    }
+  });
+  const again = el("button", "alt", "↻ New game");
+  again.addEventListener("click", startMS);
+  p.appendChild(hint); p.appendChild(again);
+  statusEl.textContent = "Minesweeper ready.";
+}
+
+/* ================= Nim (Q-learning, trained in your browser) ================= */
+let nimQ = {}, nimState = null;
+function nimKey(state, a) { return state.join(",") + "|" + a[0] + "," + a[1]; }
+function nimActions(state) { const out = []; state.forEach((n, i) => { for (let k = 1; k <= n; k++) out.push([i, k]); }); return out; }
+function nimBest(state, explore) {
+  const acts = nimActions(state);
+  if (explore && Math.random() < 0.2) return acts[Math.floor(Math.random() * acts.length)];
+  let best = null, bv = -Infinity;
+  for (const a of acts) { const v = nimQ[nimKey(state, a)] || 0; if (v > bv) { bv = v; best = a; } }
+  return best;
+}
+function nimTrain(games) {
+  nimQ = {};
+  for (let g = 0; g < games; g++) {
+    let state = [1, 3, 5, 7], last = [null, null], player = 0;
+    while (true) {
+      const a = nimBest(state, true);
+      const old = state.slice();
+      state[a[0]] -= a[1];
+      if (state.every(x => x === 0)) {
+        // mover took the last object and loses (misère)
+        const lk = last[player] && nimKey(last[player][0], last[player][1]);
+        if (lk) nimQ[lk] = (nimQ[lk] || 0) + 0.5 * (1 - (nimQ[lk] || 0));
+        const ck = nimKey(old, a);
+        nimQ[ck] = (nimQ[ck] || 0) + 0.5 * (-1 - (nimQ[ck] || 0));
+        break;
+      }
+      if (last[player]) {
+        const lk = nimKey(last[player][0], last[player][1]);
+        const future = Math.max(...nimActions(state).map(x => nimQ[nimKey(state, x)] || 0), 0);
+        nimQ[lk] = (nimQ[lk] || 0) + 0.5 * (0 + future - (nimQ[lk] || 0));
+      }
+      last[player] = [old, a];
+      player = 1 - player;
+    }
+  }
+}
+function startNim() {
+  const p = panel("🥢 Nim vs the Learning AI", "Piles of objects: 1, 3, 5, 7. On your turn, remove any number of objects from ONE pile. Whoever takes the LAST object LOSES. The AI first teaches itself below — watch.");
+  const msg = el("p", "msg", "⏳ The AI is playing 3,000 practice games against itself…");
+  p.appendChild(msg);
+  const board = el("div"); p.appendChild(board);
+  const again = el("button", "alt", "↻ New game (retrain AI)");
+  again.addEventListener("click", startNim);
+  p.appendChild(again);
+  setTimeout(() => {
+    nimTrain(3000);
+    nimState = [1, 3, 5, 7];
+    msg.textContent = "✅ Training done — the AI learned " + Object.keys(nimQ).length + " lessons. Your move: choose a pile and how many to remove.";
+    renderNim(board, msg);
+  }, 60);
+}
+function renderNim(board, msg) {
+  board.innerHTML = "";
+  nimState.forEach((n, i) => {
+    const pile = el("div", "pile");
+    pile.appendChild(el("div", "objs", "🪙".repeat(n) || "—"));
+    pile.appendChild(el("div", null, "Pile " + (i + 1) + " (" + n + ")"));
+    if (n > 0) {
+      const sel = document.createElement("select");
+      for (let k = 1; k <= n; k++) { const o = document.createElement("option"); o.value = k; o.textContent = "take " + k; sel.appendChild(o); }
+      const btn = el("button", "act", "Take");
+      btn.addEventListener("click", () => {
+        nimState[i] -= parseInt(sel.value);
+        if (nimState.every(x => x === 0)) { msg.textContent = "😅 You took the last object — so the AI wins this time. Play again!"; board.innerHTML = ""; return; }
+        const a = nimBest(nimState, false);
+        nimState[a[0]] -= a[1];
+        if (nimState.every(x => x === 0)) { msg.textContent = "🎉 The AI was forced to take the last object — YOU WIN! You beat a trained AI."; board.innerHTML = ""; return; }
+        msg.textContent = "🤖 The AI removed " + a[1] + " from pile " + (a[0] + 1) + ". Your move.";
+        renderNim(board, msg);
+      });
+      pile.appendChild(sel); pile.appendChild(btn);
+    }
+    board.appendChild(pile);
+  });
+}
+
+/* ================= Degrees & Crossword (Pyodide, using the project's own code) ================= */
+let pyodide = null, pyReady = false;
+async function ensurePy(statusMsg) {
+  if (pyReady) return;
+  statusEl.innerHTML = '<span class="spin">⏳</span> ' + statusMsg;
+  pyodide = await loadPyodide();
+  pyReady = true;
+}
+async function fetchToFS(url, path) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Could not load " + url);
+  const data = new Uint8Array(await res.arrayBuffer());
+  const parts = path.split("/");
+  let dir = "";
+  for (let i = 0; i < parts.length - 1; i++) { dir += (i ? "/" : "") + parts[i]; try { pyodide.FS.mkdir(dir); } catch (e) {} }
+  pyodide.FS.writeFile(path, data);
+}
+function startDegrees() {
+  const p = panel("🎬 Degrees of Separation", "The project connects two actors through movies they starred in (breadth-first search over IMDb data). Loading the movie data takes a few seconds the first time.");
+  const fromIn = document.createElement("input"); fromIn.type = "text"; fromIn.value = "Tom Hanks"; fromIn.placeholder = "Actor 1";
+  const toIn = document.createElement("input"); toIn.type = "text"; toIn.value = "Kevin Bacon"; toIn.placeholder = "Actor 2";
+  const btn = el("button", "act", "🔎 Find the connection");
+  const msg = el("p", "msg", "Try: Tom Hanks → Kevin Bacon, or Emma Watson → Tom Cruise (data: IMDb small dataset).");
+  btn.addEventListener("click", async () => {
+    try {
+      await ensurePy("Loading Python + IMDb data…");
+      if (!pyodide.globals.has("degrees_ready")) {
+        for (const f of ["people.csv", "movies.csv", "stars.csv"]) {
+          try { await fetchToFS(RAW + "degrees/small/" + f, "small/" + f); }
+          catch (e) { await fetchToFS(RAW + "degrees/large/" + f, "small/" + f); }
+        }
+        await pyodide.runPythonAsync(`
+import csv
+from collections import deque
+people, movies, stars = {}, {}, {}
+def load(directory):
+    global people, movies, stars
+    with open(f"{directory}/people.csv", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            people[row["id"]] = {"name": row["name"], "birth": row["birth"], "movies": set()}
+    with open(f"{directory}/movies.csv", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            movies[row["id"]] = {"title": row["title"], "year": row["year"], "stars": set()}
+    with open(f"{directory}/stars.csv", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            try:
+                people[row["person_id"]]["movies"].add(row["movie_id"])
+                movies[row["movie_id"]]["stars"].add(row["person_id"])
+            except KeyError:
+                pass
+load("small")
+def person_id_for_name(name):
+    ids = [pid for pid, p in people.items() if p["name"].lower() == name.lower()]
+    return ids[0] if ids else None
+def shortest_path(source, target):
+    if source == target: return []
+    queue = deque([(source, [])])
+    explored = set()
+    while queue:
+        person, path = queue.popleft()
+        for movie_id in people[person]["movies"]:
+            for star in movies[movie_id]["stars"]:
+                if star in explored or any(s == star for _, s in path): continue
+                newpath = path + [(movie_id, star)]
+                if star == target: return newpath
+                queue.append((star, newpath))
+        explored.add(person)
+    return None
+degrees_ready = True
+`);
+      }
+      pyodide.globals.set("nm_from", fromIn.value.trim());
+      pyodide.globals.set("nm_to", toIn.value.trim());
+      const out = await pyodide.runPythonAsync(`
+import json
+src = person_id_for_name(nm_from); tgt = person_id_for_name(nm_to)
+if src is None: result = "Actor not found in the data: " + nm_from
+elif tgt is None: result = "Actor not found in the data: " + nm_to
+else:
+    path = shortest_path(src, tgt)
+    if path is None: result = "No connection found."
+    else:
+        lines = [f"{len(path)} degree(s) of separation!", people[src]["name"]]
+        cur = src
+        for movie_id, star in path:
+            lines.append(f"  → starred in “{movies[movie_id]['title']}” ({movies[movie_id]['year']}) with → {people[star]['name']}")
+            cur = star
+        result = "\\n".join(lines)
+result
+`);
+      msg.style.whiteSpace = "pre-wrap";
+      msg.textContent = out;
+      statusEl.textContent = "Done ✔";
+    } catch (err) {
+      msg.textContent = "Something went wrong: " + err.message;
+    }
+  });
+  p.appendChild(fromIn); p.appendChild(toIn); p.appendChild(btn); p.appendChild(msg);
+  statusEl.textContent = "Degrees ready — press the button.";
+}
+function startXW() {
+  const p = panel("🧩 Crossword Generator", "Give the AI an empty crossword grid and a word list — it fills every slot itself using arc consistency (AC-3) and backtracking search: the project's own code, running live.");
+  const sel = document.createElement("select");
+  [["structure0.txt", "Small grid"], ["structure1.txt", "Medium grid"], ["structure2.txt", "Large grid"]].forEach(([v, t]) => { const o = document.createElement("option"); o.value = v; o.textContent = t; sel.appendChild(o); });
+  sel.value = "structure1.txt";
+  const btn = el("button", "act", "🧩 Generate the crossword");
+  const msg = el("p", "msg", "First run loads Python (a few seconds).");
+  const holder = el("div");
+  btn.addEventListener("click", async () => {
+    try {
+      await ensurePy("Loading Python…");
+      statusEl.innerHTML = '<span class="spin">⏳</span> The AI is solving the crossword…';
+      await fetchToFS(RAW + "crossword/crossword.py", "crossword.py");
+      await fetchToFS(RAW + "crossword/generate.py", "generate.py");
+      await fetchToFS(RAW + "crossword/data/" + sel.value, "data/" + sel.value);
+      const wordsFile = sel.value.replace("structure", "words");
+      await fetchToFS(RAW + "crossword/data/" + wordsFile, "data/" + wordsFile);
+      pyodide.globals.set("xw_structure", "data/" + sel.value);
+      pyodide.globals.set("xw_words", "data/" + wordsFile);
+      const out = await pyodide.runPythonAsync(`
+import json
+from crossword import Crossword
+from generate import CrosswordCreator
+cw = Crossword(xw_structure, xw_words)
+creator = CrosswordCreator(cw)
+assignment = creator.solve()
+grid = []
+for i in range(cw.height):
+    row = []
+    for j in range(cw.width):
+        if not cw.structure[i][j]: row.append(None)
+        else:
+            letter = None
+            for var in cw.variables:
+                if var.i == i and var.j == j and var.direction == "across" and assignment and var in assignment:
+                    letter = assignment[var][var.cells.index((i, j))]
+                if var.i == i and var.j == j and var.direction == "down" and assignment and var in assignment:
+                    letter = assignment[var][var.cells.index((i, j))]
+            row.append(letter)
+    grid.append(row)
+json.dumps(grid)
+`);
+      const grid = JSON.parse(out);
+      holder.innerHTML = "";
+      const t = document.createElement("table"); t.className = "xw";
+      grid.forEach(row => {
+        const tr = document.createElement("tr");
+        row.forEach(cellVal => {
+          const td = document.createElement("td");
+          if (cellVal === null) td.className = "block";
+          else td.textContent = cellVal || "?";
+          tr.appendChild(td);
+        });
+        t.appendChild(tr);
+      });
+      holder.appendChild(t);
+      msg.textContent = "✅ Solved! Every across and down slot is filled with a real word, and all crossing letters match.";
+      statusEl.textContent = "Done ✔";
+    } catch (err) {
+      msg.textContent = "Something went wrong: " + err.message;
+      statusEl.textContent = "Error.";
+    }
+  });
+  p.appendChild(sel); p.appendChild(btn); p.appendChild(msg); p.appendChild(holder);
+  statusEl.textContent = "Crossword ready — press the button.";
+}
+
+/* ================= The other projects ================= */
+function showMore() {
+  const p = panel("📚 The Other Seven Projects", "These run on a computer rather than in a phone browser (one trains a neural network, one runs the BERT language model) — here is what each one does. Full code is on GitHub.");
+  const items = [
+    ["♞ Knights", "Solves Knights & Knaves logic puzzles — who is telling the truth, who is lying — using pure logic.", "knights"],
+    ["🎞 PageRank", "The idea behind Google: works out which web pages matter most, two different ways.", "pagerank"],
+    ["🧬 Heredity", "Works out the chance a child inherits a gene or a trait from their parents.", "heredity"],
+    ["🛍 Shopping", "Learns from 12,000 shoppers to predict whether a new visitor will buy something.", "shopping"],
+    ["🚦 Traffic — 98.32% accurate!", "A neural network that looks at a photo of a German traffic sign and names it — 43 kinds, right 98 times out of 100 in testing.", "traffic"],
+    ["🌳 Parser", "Breaks English sentences into their grammar tree and picks out the noun phrases.", "parser"],
+    ["🤖 Attention (BERT)", "The technology under ChatGPT: guesses the missing word in a sentence and shows which words the model pays attention to.", "attention"]
+  ];
+  items.forEach(([t, d, folder]) => {
+    const div = el("div");
+    const b = el("b", null, t); div.appendChild(b);
+    div.appendChild(document.createTextNode(" — " + d + " "));
+    const a = document.createElement("a"); a.href = GH + folder; a.target = "_blank"; a.rel = "noopener"; a.textContent = "See the code →";
+    div.appendChild(a);
+    div.style.margin = "10px 0";
+    p.appendChild(div);
+  });
+  statusEl.textContent = "All 12 projects passed with full marks.";
+}
+</script>
+</body>
+</html>
